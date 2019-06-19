@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-public class MailConfiguration {
+public class MailConfig {
 
     @Value("${spring.mail.host}")
     private String host;
@@ -26,7 +26,7 @@ public class MailConfiguration {
     @Value("${spring.mail.protocol}")
     private String protocol;
 
-    @Value("${spring.mail.debug}")
+    @Value("${mail.debug}")
     private String debug;
 
     @Value("${spring.mail.properties.mail.smtp.auth}")
