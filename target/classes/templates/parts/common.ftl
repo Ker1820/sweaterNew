@@ -1,3 +1,4 @@
+<#import "navbar.ftl" as n>
 <#macro page>
     <!doctype html>
     <html lang="en">
@@ -16,7 +17,7 @@
         <title>Document</title>
     </head>
     <body>
-    <#include "navbar.ftl">
+    <@n.navbar/>
     <div class="container">
         <#nested>
     </div>

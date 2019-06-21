@@ -35,7 +35,6 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("users", new User());
 
         return "registration";
     }

@@ -6,6 +6,7 @@ import com.example.sweater.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,12 +35,22 @@ public class MainController {
     private String uploadPath;
 
     @GetMapping("/")
-    public String greeting(Map<String, Object> model) {
+    public String greeting(Model model) {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getCredentials());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getDetails());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName().getClass());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
+
+        model.addAttribute("myName", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "greeting";
     }
 
     @GetMapping("/main")
     public String main(@RequestParam(required = false) String filter, Model model) {
+
+
         Iterable<Message> messages = messageRepo.findAll();
 
         if (filter != null && !filter.isEmpty()) {
@@ -52,22 +63,23 @@ public class MainController {
 
 
         return "main";
-    }
+}
 
     @PostMapping("/main")
     public String add(
             @AuthenticationPrincipal User user,
-            @Valid   Message message,
+            @Valid Message message,
             BindingResult bindingResult,
             Model model,
             @RequestParam MultipartFile file
     ) throws IOException {
+
         message.setAuthor(user);
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            model.addAttribute("message",message);
+            model.addAttribute("message", message);
         } else {
             if (file != null && !file.getOriginalFilename().isEmpty()) {
                 File uploadDir = new File(uploadPath);
@@ -96,7 +108,6 @@ public class MainController {
 
         return "main";
     }
-
 
 
 }

@@ -21,6 +21,9 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Message> messages;
+
     @Email(message = "Email is not correct")
     @NotBlank(message = "Email cannot be empty!")
     private String email;

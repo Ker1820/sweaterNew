@@ -4,7 +4,7 @@
             <label class="col-sm-2 col-form-label">User Name :</label>
             <div class="col-sm-6">
                 <input type="text" name="username"
-                        <#--                       value="<#if user??>${user.username}</#if>"-->
+                       value="<#if user??>${user.username}</#if>"
                        class="form-control ${(usernameError??)?string('is-invalid', '')}"
                        placeholder="User name"/>
                 <#if usernameError??>
@@ -45,7 +45,7 @@
                 <label class="col-sm-2 col-form-label">Email:</label>
                 <div class="col-sm-6">
                     <input type="email" name="email"
-                            <#--                           value="<#if user??>${user.email}</#if>"-->
+                           value="<#if user??>${user.email}</#if>"
                            class="form-control ${(emailError??)?string('is-invalid', '')}"
                            placeholder="some@some.com"/>
                     <#if emailError??>
